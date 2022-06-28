@@ -19,5 +19,5 @@ function register(){
     let body = JSON.stringify({username:username1,email:email1,password:password1,address:address1,age:age1,college_name:college1})
     registeruser.setRequestHeader('Content-type','application/json;charset=UTF-8')
     registeruser.send(body)
-    alert("you are successfully registered")
+    alert("successfully registered")
 }

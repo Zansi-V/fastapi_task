@@ -1,8 +1,6 @@
 function redirect() {
     window.location= "home.html";
- }
-
-window.location
+}
 document.addEventListener('DOMContentLoaded', function(){
 document.getElementById('login_datav').onclick = function(){
     var username = document.getElementById('username12').value;
@@ -15,12 +13,18 @@ document.getElementById('login_datav').onclick = function(){
         if(request.readyState === 4 && request.status === 200){
             let object1 = JSON.parse(request.response)
             localStorage.setItem("users",JSON.stringify(object1.access_token))
-            redirect()
+            window.location= "home.html";
         }
     }
     var body = JSON.stringify({username:username,password:password});
-    request.send(body)
-    alert("you are successsfully login")
+    request.send(body) 
+    if(username=="" || password=="")
+    {
+        alert("please enter the value")
+    }
+    else{
+        alert("succesfully login")
+    }
   }
 })
 

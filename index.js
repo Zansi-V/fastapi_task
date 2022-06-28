@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
 function onload_event(){
    var x = JSON.parse(localStorage.getItem("users"));
    let xhr = new XMLHttpRequest()
+
    xhr.onreadystatechange = () =>{
     if(xhr.readyState === 4 && xhr.status === 200){
         let object1 = JSON.parse(xhr.response)
@@ -37,41 +38,7 @@ window.onload = load;
 //     load();<br />
 //     choose();
 // }
-function load1(){
-let def = document.getElementById("object").value
-    let currentSection = -1;
-    // let def = 47
-    page_limit = 1
-    console.log(currentSection)
-    page_size=Math.ceil(def/page_limit);
-    var start = Math.max(1, page_size.index - 2)
-    var end = Math.min(start + 5, page_size.length)
-    let row = document.getElementById("console");
-    let previousButton= document.querySelector(".previous");
-    // button ="<button>1</button>";
-    for (var i = 1; i <= page_size; i++) { 
-        row.innerHTML +="<button class='btn btn-primary' onclick='r1(this)'>"+i+"</button>"   
-    }
-    let sectionButtons = document.querySelectorAll(".console1 > button");
-    let nextButton = document.querySelector(".next");
-    nextButton.addEventListener("click", function() {
-    if (currentSection < sectionButtons.length){
-        sectionButtons[currentSection+1].click(this);
-        console.log(sectionButtons[currentSection+1])
-        currentSection++;
-    }
 
-});
-    
-    previousButton.addEventListener("click", function() {
-    if (currentSection > -1) {
-      let current_btn = document.querySelector('.console1 > .blue');
-      current_btn.classList.remove('blue')
-      sectionButtons[currentSection-1].click();
-      currentSection--;
-     }
-   });    
-}
 
 function load(){
     var url= "http://127.0.0.1:8000/searchuser"
@@ -88,7 +55,7 @@ function searchvs(){
         if (request.readyState == 4 && request.status == 200) {
             var json_data = JSON.parse(request.response)
             // tableshow(json_data)   
-            var html_data ="<tr><th onclick=sorttable2(this)>stud_id</th><th onclick=sorttable2(this)>username</th><th onclick=sorttable2(this)>email</th><th onclick=sorttable2(this)>address</th><th onclick=sorttable2(this)>age</th><th onclick=sorttable2(this)>college_name</th><th>Action</th></tr>";
+            var html_data ="<tr><th onclick=sorttable2(this)>stud_id <i class='fa-thin fa-sort'></i></th><th onclick=sorttable2(this)>username</th><th onclick=sorttable2(this)>email</th><th onclick=sorttable2(this)>address</th><th onclick=sorttable2(this)>age</th><th onclick=sorttable2(this)>college_name</th><th>Action</th></tr>";
                     for(var user of json_data){  
                             html_data+="<tr>"+
                                 "<td>"+user[0]+"</td>"+
@@ -215,6 +182,7 @@ function supdate(){
 
 function studentdata(){
     request=new XMLHttpRequest();
+    console.log(request)
     request.onreadystatechange = () =>{
         if (request.readyState == 4 && request.status == 200) {
             var json_data = JSON.parse(request.response)
@@ -259,8 +227,67 @@ function sorttable2(th){
 //     items[i].onclick=function(){
 //         index = tab.indexOf(this.innerHTML)
 //         er = this.innerHTML
+function load1(){
+    let def = document.getElementById("object").value
+    console.log(def)
+    
+    let currentSection = -1;
+    // let def = 47
+    page_limit = 1
+    console.log(currentSection)
+    page_size=Math.ceil(def/page_limit);
+    let no = document.getElementById("pagesize")
+    no.innerHTML=page_size
+    var start = Math.max(1, page_size.index - 2)
+    var end = Math.min(start + 5, page_size.length)
+    let row = document.getElementById("console");
+    let previousButton= document.querySelector(".previous");
+    let current_page = 1
+    za =""
+    // button ="<button>1</button>";
+    for (var i = 1; i <= page_size; i++) { 
+        current_page=5
+          
+        if(i == current_page){
+            za +="<button class='btn btn-primary onclick1' onclick='r1(this)'>"+i+"</button>"
+        }
+        else if(i >= 5 && i != page_size){
+            za +=".";       
+         }
+        else{
+            za +="<button class='btn btn-primary' onclick='r1(this)'>"+i+"</button>"  
+        }
+    }
+    // for(j=1;j<current_page;j++){
+       
+    // }
+
+    row.innerHTML = za
+
+    let sectionButtons = document.querySelectorAll(".console1 > button");
+    let nextButton = document.querySelector(".next");
+    nextButton.addEventListener("click", function() {
+    if (currentSection < sectionButtons.length){
+        sectionButtons[currentSection+1].click(this);
+        console.log(sectionButtons[currentSection+1])
+        currentSection++;
+    }
+
+});
+    
+    previousButton.addEventListener("click", function() {
+    if (currentSection > -1) {
+      let current_btn = document.querySelector('.console1 > .blue');
+      current_btn.classList.remove('blue')
+      sectionButtons[currentSection-1].click();
+      currentSection--;
+     }
+   });    
+}
 
 function r1(td){
+        let no = document.getElementById("no")
+        no.innerHTML=td.innerHTML
         er = td.innerHTML
         td.classList.add('blue')
         let current_btn = document.querySelector('.blue');

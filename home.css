@@ -6,6 +6,7 @@ td button{
          color: white;
 } */
  #logout{
+       cursor: pointer;
      display:none;
      /* padding-right: 0.5rem;
      padding-left: 0.5rem;
@@ -15,6 +16,7 @@ td button{
      padding-top: 7px; */
 } 
 #logout:hover{
+
        color:#c2bebf;
 }
 #editi{
