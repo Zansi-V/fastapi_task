@@ -1,0 +1,22 @@
+/* tr{
+    background-color: #212529;
+ color:white;
+}
+td button{
+         color: white;
+} */
+ #logout{
+     display:none;
+     /* padding-right: 0.5rem;
+     padding-left: 0.5rem;
+     color: rgba(255,255,255,.55);
+     text-decoration: none;
+     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+     padding-top: 7px; */
+} 
+#logout:hover{
+       color:#c2bebf;
+}
+#editi{
+       margin-right:4px;
+}

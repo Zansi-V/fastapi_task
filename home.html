@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DashBoard</title>
+    <style>
+      .next.disable,
+     .previous.disable{
+      cursor:not-allowed;
+      opacity: .5;
+    }
+    .console1 button.blue{
+      background-color: blue;
+    }
+    </style>
+    
+    <!-- <link rel ="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+ 
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="javascript:void(0)">ZansiCreation</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Home</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" onkeyup="searchvs()" type="text" placeholder="Search User.." id="sear">
+             
+            </form>
+            <ul class="navbar-nav ">
+                <li class="nav-item">
+                    <a class="nav-link" id="log" href="login.html">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="regs" href="registration.html">Registration</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pi"></a>
+                  </li>
+                  <li class="nav-item">
+                    <a  class="nav-link" id="logout">logout</a>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container mt-3">
+      <h2>Student Details Page</h2>
+    </div>
+    <div  class="container d-flex">
+      <button class="btn btn-primary previous disable" id="previous"><<</button>
+      <div id="console" class="console1"></div>
+      <button class="btn btn-primary next" id="next">>></button>
+    </div> 
+    <div>
+        <div class="container mt-3">
+         <table id="table" class="table table-dark table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Address</th>
+                <th>College Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+  
+        </tbody>
+        </table>
+        </div>
+    </div>
+    <div id="deleteModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Are you want to sure delete this user?</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                  <input type="hidden" class="form-control" id="delete_id" placeholder="Enter the Id" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteuser()">Yes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h5 class="modal-title">Are You Want To Sure Update The Data?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">   
+                <input type="hidden" class="form-control mb-2" id="update_id" placeholder="Enter the Id">
+                <input type="text" class="form-control" id="username" placeholder="Enter the Username ">
+                <input type="email" class="form-control" id="email" placeholder="Enter the Email ">
+                <textarea  id="address" class="form-control" cols="30" rows="5" placeholder="Enter the Address"></textarea>
+                <input type="text" class="form-control" id="age" placeholder="Enter the Age ">
+                <input type="text" class="form-control" id="college" placeholder="Enter the College">
+          </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="supdate()">Yes</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <a id="object" href=""></a> -->
+    <input type="hidden" name="" id="object">
+    <script src="index.js"></script>
+</body>
+</html>
