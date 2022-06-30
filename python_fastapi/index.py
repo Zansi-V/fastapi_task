@@ -7,13 +7,14 @@ from numpy import s_
 from pydantic import BaseModel
 from datetime import datetime,timedelta
 from requests import Session, session
-from databse import engine,sessionlocal
-from models import Base, User
+from python_fastapi.databse import engine,sessionlocal
+from python_fastapi.models import Base, User
 from passlib.context import CryptContext
 from email_validator import validate_email,EmailNotValidError
 from jose import jwt,JWTError
 from fastapi.templating import Jinja2Templates
-from schemas import UserCreate, UserUpdate, userid, userpass,_UserBase,TokenData
+import math
+from python_fastapi.schemas import UserCreate, UserUpdate, userid, userpass,_UserBase,TokenData
 from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi_pagination import Page,LimitOffsetPage,paginate,add_pagination
@@ -143,12 +144,12 @@ def login(form_data:userpass,db:session = Depends(get_databse_session)):
 # def search_job(query:str,db:Session):
 #     name = db.query(User).filter(User.username.contains(query)).all()
 #     return name
-@app.post("/login1")
-def login(form_data:userpass,db:session = Depends(get_databse_session)):
-   user = authenticate(username=form_data.username,password=form_data.password,db=db)
-   if not user:
-       raise HTTPException(status_code = 400,detail="incorrect username or password")
-   return user
+# @app.post("/login1")
+# def login(form_data:userpass,db:session = Depends(get_databse_session)):
+#    user = authenticate(username=form_data.username,password=form_data.password,db=db)
+#    if not user:
+#        raise HTTPException(status_code = 400,detail="incorrect username or password")
+#    return user
    
 @app.get("/authorize/")
 def get_user(token:str |None =  Header(None),db:session=Depends(get_databse_session)):
@@ -176,29 +177,32 @@ def get_user(token:str |None =  Header(None),db:session=Depends(get_databse_sess
       "age":user[4],
       "college_name": user[5] }
 
-@app.get("/getuser/{id}",tags=["search"])
-def search_job(id: int, db: session = Depends(get_databse_session)):
-    searchuser = db.query(User).with_entities(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).filter(User.stud_id == id).first()
-    return {
-      "stud_id":searchuser[0],
-      "username": searchuser[1],
-      "email": searchuser[2],
-      "address": searchuser[3],
-      "age": searchuser[4],
-      "college_name": searchuser[5] }
+# @app.get("/getuser/{id}",tags=["search"])
+# def searchuser(id: int, db: session = Depends(get_databse_session)):
+#     searchuser = db.query(User).with_entities(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).filter(User.stud_id == id).first()
+#     return {
+#       "stud_id":searchuser[0],
+#       "username": searchuser[1],
+#       "email": searchuser[2],
+#       "address": searchuser[3],
+#       "age": searchuser[4],
+#       "college_name": searchuser[5] }
     
     
-@app.get("/searchuser/{query}",tags=["search"])
+@app.get("/user/{query}",tags=["search"])
 def search_job(query: str, db: session = Depends(get_databse_session)):
-    searchuser = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).filter(User.username.like(query + "%")).all()
+    # if key == "username":
+    searchuser = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).filter((User.username.like(query + "%")) | (User.college_name.like(query + "%") ) | (User.age.like(query + "%") )).all()
+    # if key == "email":
+    #   searchuser = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).filter(User.email.like(query + "%")).all()
     return searchuser
 
-@app.get("/searchuser/")
-async def main(db:session =Depends(get_databse_session)):
-   get_student = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).all()
-   return get_student
+# @app.get("/searchuser/")
+# async def main(db:session =Depends(get_databse_session)):
+#    get_student = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).all()
+#    return get_student
 
-@app.put("/updateuser/{sid}")
+@app.put("/user/{sid}")
 async def upadate_user(sid:int,details:UserUpdate,token:str|None = Header(None),db:session = Depends(get_databse_session)):
    Credentials_exception =HTTPException(
      status_code=status.HTTP_401_UNAUTHORIZED,
@@ -222,7 +226,7 @@ async def upadate_user(sid:int,details:UserUpdate,token:str|None = Header(None),
    db.commit()
    return {"message":"student successfully updated"}
 
-@app.delete("/delete/{id}")
+@app.delete("/user/{id}")
 async def delete_student(id:int,token:str |None =  Header(None),db:session=Depends(get_databse_session)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -244,35 +248,25 @@ async def delete_student(id:int,token:str |None =  Header(None),db:session=Depen
     db.commit()
     return {"message":"student NO {id} has been successfully deleted"}
 
-
-@app.get("/search/")
-def search(request: Request,db:session = Depends(get_databse_session)):
-    # name = search_job(query,db = db)
-    # jobs = search_job(query, db=db)
-
-    name = db.query(User).all()
-    return templates.TemplateResponse("document.html",{"request":request,"name":name})
-
-
 # first youtube way - Pagination
-@app.get('/app/default',response_model=Page[UserCreate],tags=["pagination"])
-@app.get('/app/limit-offset',response_model=LimitOffsetPage[UserCreate],tags=["pagination"])
-def allstudent(db:session = Depends(get_databse_session)):
-    return paginate(db.query(User).all())
-    # return paginate(users)
+# @app.get('/app/default',response_model=Page[UserCreate],tags=["pagination"])
+# @app.get('/app/limit-offset',response_model=LimitOffsetPage[UserCreate],tags=["pagination"])
+# def allstudent(db:session = Depends(get_databse_session)):
+#     return paginate(db.query(User).all())
+#     # return paginate(users)
 
 add_pagination(app)
 
 # second myway
-@app.get("/pagination2/{page_num}",tags=["pagination"])
-def all_student(page_num:int=1,db:session = Depends(get_databse_session)):
+@app.get("/user/")
+def all_student(page_num:int|None = 1,db:session = Depends(get_databse_session)):
     page_size=1
     start =(page_num - 1) * page_size
     end = start + page_size
     data = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).all()
     data_length = len(data)
+    # data_length =math.ceil(data_length1/page_size)
     response = {
-    
        "data": data[start:end],
        "total":data_length,
        "page":page_num,
@@ -281,13 +275,7 @@ def all_student(page_num:int=1,db:session = Depends(get_databse_session)):
     return response
 
 # sorting
-data = [{"username":"zansi","age":30},{"username":"mansi","age":20},{"username":"teena","age":40}]
-@app.get("/hsorrting",tags=["sorting"])
-def sort_student():
-    tem = sorted(data,key = lambda x: (x["username"]))
-    return tem
-
-@app.get("/sorting/{key_pair}",tags=["sorting"])
+@app.get("/user/{key_pair}",tags=["sorting"])
 def sort_student(key_pair:str,db:session = Depends(get_databse_session)):
     s_student = db.query(User.stud_id,User.username,User.email,User.address,User.age,User.college_name).all() 
     if key_pair == "stud_id":

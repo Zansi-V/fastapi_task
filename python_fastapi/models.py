@@ -1,6 +1,6 @@
 from enum import unique
 from sqlalchemy import  Column, Integer,String,Boolean
-from databse import Base
+from python_fastapi.databse import Base
 
 # address,age,college name
 class User(Base):

@@ -40,13 +40,59 @@ window.onload = load;
 // }
 
 
+// function load(){
+//     var url= "http://127.0.0.1:8000/searchuser"
+//     studentdata()
+//     request.open("GET",url,true)
+//     request.send()
+// }
+    
 function load(){
-    var url= "http://127.0.0.1:8000/searchuser"
-    studentdata()
+    var url= "http://127.0.0.1:8000/user/"
+    request=new XMLHttpRequest();
+    console.log(request)
+    request.onreadystatechange = () =>{
+        if (request.readyState == 4 && request.status == 200) {
+            var array1 = JSON.parse(request.response)
+            let total=array1.total
+            document.getElementById("totalp").value=total
+            let page_size1=array1.page
+            document.getElementById("page").value=page_size1
+            let page=array1.page_size
+            document.getElementById("pagesi").value=page
+            let array=array1.data
+            console.log(array1)
+            var html_data ="<tr><th onclick=sorttable2(this)>stud_id</th><th onclick=sorttable2(this)>username</th><th onclick=sorttable2(this)>email</th><th onclick=sorttable2(this)>address</th><th onclick=sorttable2(this)>age</th><th onclick=sorttable2(this)>college_name</th><th>Action</th></tr>";
+                for(var i=0;i<array.length;i++){
+
+                          html_data+="<tr>"+
+                            "<td>"+array[i][0]+"</td>"+
+                            "<td>"+array[i][1]+"</td>"+
+                            "<td>"+array[i][2]+"</td>"+
+                            "<td>"+array[i][3]+"</td>"+
+                            "<td>"+array[i][4]+"</td>"+
+                            "<td>"+array[i][5]+"</td>"+
+                            "<td><button class='btn btn-primary' id='editi' onclick='run(this)' data-bs-toggle='modal' data-bs-target='#myModal'>Edit</button><button id='deleteu' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal' onclick='deleter(this)'>Delete</button></td>"+
+                            "</tr>";
+
+                    }
+                }
+                table.innerHTML = html_data
+                totalpages =  document.getElementById("totalp").value
+                pagesi= document.getElementById("pagesi").value
+                // let totalpages = Math.ceil(totalpages1/pagesi)
+                // let totalpages=9
+
+                page1 = 1
+                // console.log(page2)
+                element(totalpages,page1)
+                let totalpage = document.getElementById("totalpage")
+                totalpage.innerHTML = totalpages
+       }
     request.open("GET",url,true)
     request.send()
 }
-    
+
 function searchvs(){
     
     var search1=document.getElementById("sear")
@@ -71,8 +117,9 @@ function searchvs(){
       }
     }
     // studentdata()
-    request.open("GET","http://127.0.0.1:8000/searchuser/"+ search1.value,true)
+    request.open("GET","http://127.0.0.1:8000/user/"+ search1.value,true)
     request.send();
+    
 }
 
 function tableshow(object){
@@ -128,7 +175,8 @@ function deleter(td){
   let row_id=selectedRow.cells[0].innerHTML
   document.getElementById('delete_id').value=row_id
 }
- function deleteuser(){
+
+function deleteuser(){
     var token = JSON.parse(localStorage.getItem("users"))
     if(token !== null) {
      let student_id = document.getElementById('delete_id').value
@@ -185,11 +233,25 @@ function studentdata(){
     console.log(request)
     request.onreadystatechange = () =>{
         if (request.readyState == 4 && request.status == 200) {
-            var json_data = JSON.parse(request.response)
-            tableshow(json_data)   
+            var array = JSON.parse(request.response)
+            var html_data ="<tr><th onclick=sorttable2(this)>stud_id</th><th onclick=sorttable2(this)>username</th><th onclick=sorttable2(this)>email</th><th onclick=sorttable2(this)>address</th><th onclick=sorttable2(this)>age</th><th onclick=sorttable2(this)>college_name</th><th>Action</th></tr>";
+                for(var i=0;i<array.length;i++){
+                    
+                          html_data+="<tr>"+
+                            "<td>"+array[i][0]+"</td>"+
+                            "<td>"+array[i][1]+"</td>"+
+                            "<td>"+array[i][2]+"</td>"+
+                            "<td>"+array[i][3]+"</td>"+
+                            "<td>"+array[i][4]+"</td>"+
+                            "<td>"+array[i][5]+"</td>"+
+                            "<td><button class='btn btn-primary' id='editi' onclick='run(this)' data-bs-toggle='modal' data-bs-target='#myModal'>Edit</button><button id='deleteu' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal' onclick='deleter(this)'>Delete</button></td>"+
+                            "</tr>";
+                    }
+                }
+                 table.innerHTML = html_data
        }
     }
-}
+
 
 function sorttable2(th){
     let thvalue = th.innerHTML
@@ -213,107 +275,15 @@ function sorttable2(th){
         table.innerHTML=html_data
     }
 }
-    request.open("GET","http://127.0.0.1:8000/sorting/"+thvalue,true)
-    request.send()
+request.open("GET","http://127.0.0.1:8000/sorting/"+thvalue,true)
+request.send()
 }
  
-// var items=document.querySelectorAll("#list li"),tab=[],index;
-// for(var i=0;i<items.length;i++)
-// {
-//     tab.push(items[i].innerHTML)
-// }
-// for(var i=0;i<items.length;i++)
-// {
-//     items[i].onclick=function(){
-//         index = tab.indexOf(this.innerHTML)
-//         er = this.innerHTML
-function load1(){
-    let def = document.getElementById("object").value
-    console.log(def)
-    
-    let currentSection = -1;
-    // let def = 47
-    page_limit = 1
-    console.log(currentSection)
-    page_size=Math.ceil(def/page_limit);
-    let no = document.getElementById("pagesize")
-    no.innerHTML=page_size
-    var start = Math.max(1, page_size.index - 2)
-    var end = Math.min(start + 5, page_size.length)
-    let row = document.getElementById("console");
-    let previousButton= document.querySelector(".previous");
-    let current_page = 1
-    za =""
-    // button ="<button>1</button>";
-    for (var i = 1; i <= page_size; i++) { 
-        current_page=5
-          
-        if(i == current_page){
-            za +="<button class='btn btn-primary onclick1' onclick='r1(this)'>"+i+"</button>"
-        }
-        else if(i >= 5 && i != page_size){
-            za +=".";       
-         }
-        else{
-            za +="<button class='btn btn-primary' onclick='r1(this)'>"+i+"</button>"  
-        }
-    }
-    // for(j=1;j<current_page;j++){
-       
-    // }
-
-    row.innerHTML = za
-
-    let sectionButtons = document.querySelectorAll(".console1 > button");
-    let nextButton = document.querySelector(".next");
-    nextButton.addEventListener("click", function() {
-    if (currentSection < sectionButtons.length){
-        sectionButtons[currentSection+1].click(this);
-        console.log(sectionButtons[currentSection+1])
-        currentSection++;
-    }
-
-});
-    
-    previousButton.addEventListener("click", function() {
-    if (currentSection > -1) {
-      let current_btn = document.querySelector('.console1 > .blue');
-      current_btn.classList.remove('blue')
-      sectionButtons[currentSection-1].click();
-      currentSection--;
-     }
-   });    
-}
-
 function r1(td){
+        er = td
         let no = document.getElementById("no")
-        no.innerHTML=td.innerHTML
-        er = td.innerHTML
-        td.classList.add('blue')
-        let current_btn = document.querySelector('.blue');
-        current_btn.classList.remove('blue')
-        td.classList.add('blue')
-        let previousButton= document.querySelector(".previous");
-        let sectionButtons = document.querySelectorAll(".console1 > button");
-        let nextButton = document.querySelector(".next");
-        if (er == 1) {
-            if (previousButton.className.split(" ").indexOf("disable") < 0) {
-                previousButton.classList.add("disable");
-            }
-        } else {
-            if (previousButton.className.split(" ").indexOf("disable") >= 0) {
-                previousButton.classList.remove("disable");
-            }
-        }
-        if (er == sectionButtons.length) {
-            if (nextButton.className.split(" ").indexOf("disable") < 0) {
-                nextButton.classList.add("disable");
-            }
-        } else {
-            if (nextButton.className.split(" ").indexOf("disable") >= 0) {
-                nextButton.classList.remove("disable");
-            }
-        }
+        no.innerHTML = td
+        
         request=new XMLHttpRequest();
         request.onreadystatechange = () => {
             if (request.readyState == 4 && request.status == 200) {
@@ -335,9 +305,67 @@ function r1(td){
                 }
                  table.innerHTML = html_data
         }
-        request.open("GET","http://127.0.0.1:8000/pagination2/"+er,true)
+        request.open("GET","http://127.0.0.1:8000/user/?page_num="+er,true)
         request.send()
 }
 
+const utag = document.querySelector("#ul1");
+function element(totalpages,page1)
+{
+let litag = "";
+let active1;
+let beforepage = page1 - 1;
+let afterpagee = page1 + 1;
+if(page1 > 1){
+   litag += `<li class ='btn btn-primary prev me-1' onclick="element(totalpages,${page1-1});r1(${page1-1})"><< prev</li>`
+}
+if(page1 > 2){
+  litag += `<li class="btn btn-primary numb me-1 " onclick="element(totalpages,1);r1(1)">1</li>`
+  if(page1 > 3){
+    litag += `<li class="dots me-1 ms-1">...</li>`
+  }
+}
+
+if(page1 == totalpages){
+   beforepage = beforepage - 2;
+}
+else if(page1 == totalpages -1){
+   beforepage = beforepage -1
+}
+
+if(page1 == 1){
+     afterpagee = afterpagee + 2;
+}
+else if(page1 == totalpages -1){
+   afterpagee = afterpagee + 1
+}
+
+for(let pagelength =beforepage;pagelength <= afterpagee;pagelength++){
+  if(pagelength > totalpages){
+     continue;
+   }
+  if(pagelength == 0){
+     pagelength = pagelength + 1
+    }
+  if(page1 == pagelength){
+     active1 = "active"
+    }
+  else{
+     active1 = ""
+    }
+  litag += `<li class ='btn btn-primary numb me-1 ms-1 ${active1}' onclick="element(totalpages,${pagelength}); r1(${pagelength});">${pagelength}</li>` 
+}
+if(page1 < totalpages - 1){
+  if(page1 < totalpages - 2){
+     litag += `<li class="dots me-1">...</li>`
+    }
+  litag += `<li class="btn btn-primary numb me-1" onclick="element(totalpages,${totalpages});r1(${totalpages})">${totalpages}</li>`
+
+}
+if(page1 < totalpages){
+  litag += `<li class ='btn btn-primary next me-1' onclick="element(totalpages,${page1+1}),r1(${page1+1})">next>></li>`
+}
+utag.innerHTML=litag
+}
 
 
