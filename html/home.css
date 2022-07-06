@@ -61,3 +61,6 @@ text-transform: capitalize;
 .dis{
        display: none;
 }
+.opacity1{ 
+       opacity: 0;
+ }

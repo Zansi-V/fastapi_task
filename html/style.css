@@ -1,0 +1,339 @@
+.absolute {
+    position: absolute;
+    top: 80px;
+    width: 470px;
+    height: 40px;
+    text-align: center;
+    background-image: linear-gradient(to right, #343a40 , yellow);
+ 
+  }
+  h2{
+    margin:4px;
+    text-shadow: 2px 2px #ff0000;
+  }
+  
+.absolutew {
+    -ms-transform: skewY(20deg); /* IE 9 */
+  transform: skewY(20deg);
+    position:absolute;
+    top: 115px;
+    left:411px;
+    width: 28px;
+    height: 20px;
+    background-color: red;
+    /* background-image: linear-gradient(to right, red , yellow); */
+    
+}
+#username1{
+    margin-top:87px;
+   
+}
+#useri{
+    margin-top:73px;
+}
+.absolutex {
+    transform: skewY(-20deg);
+    position:absolute;
+    top: 114px;
+    right:411px;
+    width: 29px;
+    height: 20px;
+    background-color:rgb(255, 255, 61);
+    /* background-image: linear-gradient(to right, red , yellow); */
+    
+}
+#content{
+    box-shadow:2px 3px 7px #888888;
+    width:32%;
+    margin:10px;
+    display:flex; 
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+    background-color:#f1f503;
+}
+a{
+    text-decoration: none;
+} 
+
+
+form{
+    box-shadow:2px 0px 7px #888888;
+    display:flex; 
+    justify-content:center;
+    align-items: center;
+    width:100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-bottom: 8px;
+    background-color: white;
+}
+
+.demo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:570px;
+}
+input{
+    box-shadow:0px 1px #aaa9a9;
+    width:100%;
+    padding-left:5px;
+    padding-right: 5px;
+    height: 25px;
+    font-size: 20px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    outline: none;
+    margin-top: 14px;
+    margin-left:9px;
+    /* border-bottom: 1px solid gray; */
+    margin-bottom: 14px;
+}
+i{
+    color:#888888;
+}
+#container{
+   width:80%;
+}
+#container div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#demo{
+    display: flex;
+    justify-content: center;
+}
+table{
+  margin-left:14px;
+  margin-right: 14px;
+  border-collapse: collapse;
+}
+tr,th,td{
+   padding:10px;
+   border:1px solid yellow ;
+   text-align: center;
+}
+td::first-letter{
+  text-transform: uppercase;
+}
+
+tr:nth-child(even){
+   background-color: #f7fb28;
+}
+#login_datav, #Registration_datav{
+    margin:4px;
+    font-size: 18px;
+    height: 35px;
+    width:107px;
+    cursor: pointer;
+    color:rgb(32, 27, 27);
+    background-image: linear-gradient(to right, red , yellow);
+    float:right;
+    outline: none;
+    border: none;
+    text-shadow: 1px 1px #ff0000;
+    border-radius: 20px;
+}
+button:hover{
+    background-image: linear-gradient(to right, yellow , red);
+}
+#modal{
+    display:none;
+    height:100%;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:100;
+    position:fixed;
+    background-color: rgba(0,0,0,0.7);
+}
+#modal-form{
+    background: #fff;
+    width:31%;
+    position:relative;
+    top:20%;
+    left:31%;
+    padding: 15px;
+    border-radius: 4px;
+}
+.login{
+    padding:10px;
+    display: flex;
+    justify-content: center;
+}
+.login p{
+  margin: 0;
+}
+.login a{
+    color: #b11414;
+    margin-left:3px
+}
+
+/* loginf */
+.demol{
+    margin-top:37px;
+    display: flex;
+    justify-content: center;
+}
+.loginf{
+   height: 400px;
+}
+#age1{
+    margin-left: 14px;
+}
+#contentl{
+    box-shadow:2px 3px 7px #888888;
+    width:32%;
+    margin:10px;
+    flex-direction: column;
+    background-color:#f1f503;
+}
+.absolutel {
+    position: absolute;
+    top: 80px;
+    width: 470px;
+    height: 40px;
+    text-align: center;
+    background-image: linear-gradient(to right, #343a40, #212529);
+ 
+  }
+  .absolutewl {
+    /* IE 9 */
+  transform: skewY(20deg);
+    position:absolute;
+    top: 115px;
+    left:411px;
+    width: 28px;
+    height: 20px;
+    background-color: #343a40;
+    /* background-image: linear-gradient(to right, red , yellow); */
+    
+}
+.absolutexl {
+    transform: skewY(-20deg);
+    position:absolute;
+    top: 115px;
+    right:411px;
+    width: 29px;
+    height: 20px;
+    background-color:#212529;
+    /* background-image: linear-gradient(to right, red , yellow); */
+    
+}
+#Registration_datav{
+    width:148px;
+}
+
+/* home page */
+#creation{
+    height:90px;
+    width:119px;
+}
+.Navbar{
+  background-image:linear-gradient(to right, red , yellow);
+  display: flex;
+}
+.logo{
+  width:33%;
+  display:flex;
+  margin-left:10px;
+}
+.logo h1{
+    margin: 0;
+    font-family: 'Pacifico', cursive;
+    color:#fde8e8;
+}
+.logo h2{
+    color:#220301;
+    margin-right: 0 ;
+    margin-top: 18px;
+    text-shadow:2px 2px 2px red;
+}
+.searchi{
+    width:70%;
+    
+}
+.searchi input{
+    width:60%;
+    border-radius: 2px;
+    margin-top: 17px;
+    height: 30px;
+}
+.foraccount{
+    display: flex;
+    float: right;
+    /* justify-content: center; */
+    align-items: center;
+}
+.foraccount a{
+    margin-right: 6px;
+    border-radius: 5px;
+    width:90px;
+    height: 25px;
+    cursor: pointer;
+    background-color: red;
+    text-align: center;
+    padding-top: 6px;
+    color:white;
+}
+.foraccount #logina{
+    background-color: #faf6f6;
+    color:black;
+}
+.foraccount #logina:hover{
+    background-color:red;
+    color:white;
+}
+.foraccount a:hover{
+   background-color: white;
+   color:black;
+}
+.main-container{
+    display: flex;;
+}
+.leftsider{
+    width:300px;
+    position:fixed; 
+    height:600px; 
+    background-image: linear-gradient(to bottom,rgb(244, 220, 2),rgb(255, 255, 107));
+}
+body{
+    margin: 0;
+}
+
+.rightsidert{
+    display: flex;
+    justify-content: center;
+    /* margin: 20px; */
+    padding-top: 20px;
+    padding-left:353px;
+}
+.edit{
+    margin-right: 6px;
+    border-radius: 5px;
+    width:90px;
+    height: 25px;
+    cursor: pointer;
+    background-color:#fd9902;
+    text-align: center;
+    margin-bottom: 3px;
+    border-color:#fd9902;
+}
+.delete{
+    margin-right: 6px;
+    border-radius: 5px;
+    width:90px;
+    height: 25px;
+    cursor: pointer;
+    background-color: red;
+    text-align: center;
+    margin-bottom: 3px;
+    border-color:red;
+}

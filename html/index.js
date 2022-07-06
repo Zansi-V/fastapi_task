@@ -49,6 +49,7 @@ window.onload = load;
 
 function load() {
   if(document.getElementById("sear").value == ""){
+    // ?page_num=2&whichsort=desc&key1=Username
    var url = "http://127.0.0.1:8000/user/";
    request = new XMLHttpRequest();
    request.onreadystatechange = () => {
@@ -68,7 +69,7 @@ function load() {
         "<h6 class='heading'>No</h6>"+
         "<div>"+
         "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
+        "<i class='fa fa-angle-down' id='nod' onclick='descending(this);clicki();'></i>"+
         "</div>"+
         "</div>"+
         "</th>"+
@@ -136,7 +137,7 @@ function load() {
           "</tr>";
       }
       totalpages = document.getElementById("totalp").value;
-      pagesi = document.getElementById("pagesi").value;
+    pagesi = document.getElementById("pagesi").value;
     // let totalpages = Math.ceil(totalpages1/pagesi)
     // let totalpages=9
     let utags = document.getElementById("container")
@@ -291,7 +292,7 @@ function tableshow(object) {
         "<h6 class='heading'>No</h6>"+
         "<div>"+
         "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
+        "<i class='fa fa-angle-down'  onclick='descending(this);clicki()'></i>"+
         "</div>"+
         "</div>"+
         "</th>"+
@@ -495,9 +496,25 @@ function r1(td) {
   let no = document.getElementById("no");
   search1 = document.getElementById("sear")
   no.innerHTML = td;
+  var key = document.getElementById("keyname")
   xmlrequest();
+  let wsort =document.getElementById("sort")
   if(document.getElementById("sear").value==""){
-  request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er, true);
+   if(wsort.value == ""){
+    request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er + "&key1="+key.value, true);
+   }
+   else{
+    request.open(
+          "GET",
+          "http://127.0.0.1:8000/user/?page_num=" +
+            er +
+            "&whichsort=" +
+            wsort.value +
+            "&key1=" +
+            key.value,
+          true
+        );
+   }
   }
   else{
   request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er +"&search="+search1.value, true);
@@ -517,7 +534,7 @@ function element(totalpages, page1) {
     });r1(${page1 - 1})"><< prev</li>`;
   }
   if (page1 > 2) {
-    litag += `<li class="btn btn-primary numb me-1 " onclick="element(totalpages,1);r1(1)">1</li>`;
+    litag += `<li class="btn btn-primary numb me-1 " onclick="element(totalpages,1);r1(1);">1</li>`;
     if (page1 > 3) {
       litag += `<li class="dots me-1 ms-1">...</li>`;
     }
@@ -570,31 +587,70 @@ function element(totalpages, page1) {
   utag.innerHTML = litag;
 }
 
-
-function descending(td) {
-  // this.parentNode.childNodes[1]
-  let descorder = "desc";
-  let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
-  var page = document.getElementById("no").innerHTML;
-  xmlrequest();
-  request.open(
-    "GET",
-    "http://127.0.0.1:8000/user/?page_num=" +
-      page +
-      "&whichsort=" +
-      descorder +
-      "&key1=" +
-      thvalue,
-    true
-  );
-  request.send();
+function clicki(){
+ 
+  // let ivalue = td
+  
+ 
+  console.log(nod)
 }
 
+function descending(td) {
+  // this.parentNode.childNodes[1] 
+  let descorder = "desc";
+  document.getElementById("sort").value= descorder
+  let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
+  var page1 = 1;
+  var key = document.getElementById("keyname")
+  key.value = thvalue
+  // var h1 = document.querySelector('h1');
+ 
+  element(totalpages, page1)
+  document.getElementById("no").value=page1
+  xmlrequest();
+  let nod = document.getElementById("nod")
+  console.log(nod)
+  nod.classList.add("opacity1")
+    request.open(
+      "GET",
+      "http://127.0.0.1:8000/user/?page_num=" +
+        page1 +
+        "&whichsort=" +
+        descorder +
+        "&key1=" +
+        thvalue,
+      true
+    );
+    request.send();
+  
+}
+
+// function des(){
+  
+//   xmlrequest();
+//   request.open(
+//     "GET",
+//     "http://127.0.0.1:8000/user/?page_num=" +
+//       page1 +
+//       "&whichsort=" +
+//       descorder +
+//       "&key1=" +
+//       thvalue,
+//     true
+//   );
+//   request.send();
+// }
+
 function ascending(td) {
+  document.getElementById("sort").value = ""
+
   // this.parentNode.childNodes[1]
   let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
-  var page = document.getElementById("no").innerHTML;
+  var key = document.getElementById("keyname")
+  key.value = thvalue
+  var page = 1;
   xmlrequest();
+  element(totalpages, page1)
   request.open(
     "GET",
     "http://127.0.0.1:8000/user/?page_num=" + page + "&key1=" + thvalue,
