@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location = "home.html";
   };
 });
+
 function onload_event() {
   var x = JSON.parse(localStorage.getItem("users"));
   let xhr = new XMLHttpRequest();
@@ -62,57 +63,9 @@ function load() {
       let page = array1.page_size;
       document.getElementById("pagesi").value = page;
       let array = array1.data;
-      var html_data =
-        "<tr>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>No</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' id='nod' onclick='descending(this);clicki();'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Username</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Email</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Address</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Age</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>College Name</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>Action</th>"+
-        "</tr>";
+      var html_data="";
       for (var i = 0; i < array.length; i++) {
+     
         html_data +=
           "<tr>" +
           "<td>" +
@@ -136,7 +89,8 @@ function load() {
           "<td><button class='btn btn-primary' id='editi' onclick='run(this)' data-bs-toggle='modal' data-bs-target='#myModal'>Edit</button><button id='deleteu' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal' onclick='deleter(this)'>Delete</button></td>" +
           "</tr>";
       }
-      totalpages = document.getElementById("totalp").value;
+      table.innerHTML = html_data;
+    totalpages = document.getElementById("totalp").value;
     pagesi = document.getElementById("pagesi").value;
     // let totalpages = Math.ceil(totalpages1/pagesi)
     // let totalpages=9
@@ -149,7 +103,7 @@ function load() {
     let totalpage = document.getElementById("totalpage");
     totalpage.innerHTML = totalpages;
   }
-    table.innerHTML = html_data;
+   
     
   };
   request.open("GET", url, true);
@@ -177,56 +131,7 @@ function searchvs() {
       let array = array1.data;
       let length1 = array1.totaldata
       document.getElementById("length").value = length1;
-      var html_data =
-        "<tr>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>No</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Username</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Email</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Address</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Age</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>College Name</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>Action</th>"+
-        "</tr>";
+      var html_data ="";
       for (var i = 0; i < array.length; i++) {
         html_data +=
           "<tr>" +
@@ -284,89 +189,59 @@ function searchvs() {
 }
 
 function tableshow(object) {
+  
   let array = object.data;
-  var html_data =
-        "<tr>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>No</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down'  onclick='descending(this);clicki()'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Username</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Email</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Address</h6>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>Age</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>"+
-        "<div class='d-flex'>"+
-        "<h6 class='heading'>College Name</h6>"+
-        "<div>"+
-        "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
-        "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
-        "</div>"+
-        "</div>"+
-        "</th>"+
-        "<th>Action</th>"+
-        "</tr>";
+  var pages = object.total
+  document.getElementById("totalpage").innerHTML=pages
+  document.getElementById("total").value=pages
+  // page1=1
+  // totalpages= document.getElementById("total").value
+  var html_data = "";
+      
   for (var i = 0; i < array.length; i++) {
+
     html_data +=
       "<tr>" +
       "<td>" +
       array[i][0] +
       "</td>" +
-      "<td class='upper'>" +
+      "<td class='upper us'>" +
       array[i][1] +
       "</td>" +
-      "<td class='upper'>" +
+      "<td class='upper em'>" +
       array[i][2] +
       "</td>" +
-      "<td class='upper'>" +
+      "<td class='upper add'>" +
       array[i][3] +
       "</td>" +
       "<td>" +
       array[i][4] +
       "</td>" +
-      "<td class='upper'>" +
+      "<td class='upper coll'>" +
       array[i][5] +
       "</td>" +
       "<td><button class='btn btn-primary' id='editi' onclick='run(this)' data-bs-toggle='modal' data-bs-target='#myModal'>Edit</button><button id='deleteu' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal' onclick='deleter(this)'>Delete</button></td>" +
       "</tr>";
   }
+
   table.innerHTML = html_data;
+  // element(totalpages,page1)
+  // clicki(this)
   // }
 }
+// function clicki(td){
+//   // let ivalue = td
+//   let nod = document.getElementById("nod")
+//   console.log(nod)
+//   nod.classList.add("opacity1")
+// }
 
 function xmlrequest() {
   request = new XMLHttpRequest();
   request.onreadystatechange = () => {
+  
     if (request.readyState == 4 && request.status == 200) {
+
       var array1 = JSON.parse(request.response);
       tableshow(array1);
     }
@@ -496,13 +371,30 @@ function r1(td) {
   let no = document.getElementById("no");
   search1 = document.getElementById("sear")
   no.innerHTML = td;
+  var page_size=document.getElementById("pagesize2").value
+  console.log(page_size)
   var key = document.getElementById("keyname")
   xmlrequest();
   let wsort =document.getElementById("sort")
   if(document.getElementById("sear").value==""){
-   if(wsort.value == ""){
+   if(wsort.value != ""){
     request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er + "&key1="+key.value, true);
    }
+   else if(page_size != ""){
+    // let totalpages=document.getElementById("total").value
+    // page1=1
+    // element(totalpages,page1)
+    request.open(
+      "GET",
+      "http://127.0.0.1:8000/user/?page_num=" +
+        er +
+        "&page_size=" +
+        page_size +
+        "&key1=" +
+        key.value,
+      true
+    );
+  }
    else{
     request.open(
           "GET",
@@ -516,9 +408,10 @@ function r1(td) {
         );
    }
   }
-  else{
-  request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er +"&search="+search1.value, true);
+  else {
+    request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er +"&search="+search1.value, true);
   }
+  
   request.send();
 }
 
@@ -587,19 +480,22 @@ function element(totalpages, page1) {
   utag.innerHTML = litag;
 }
 
-function clicki(){
- 
-  // let ivalue = td
-  
- 
-  console.log(nod)
-}
+
 
 function descending(td) {
-  // this.parentNode.childNodes[1] 
+
+  const boxes = document.querySelectorAll('.fa');
+  boxes.forEach(fa => {
+   fa.classList.remove('opacity1');
+  });
+  let ur = td
+  console.log(td.parentElement.parentElement.firstElementChild.innerHTML)
+  ur.classList.add("opacity1")
   let descorder = "desc";
   document.getElementById("sort").value= descorder
-  let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
+  // let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
+  thvalue=td.parentElement.parentElement.firstElementChild.innerHTML
+  console.log(thvalue)
   var page1 = 1;
   var key = document.getElementById("keyname")
   key.value = thvalue
@@ -608,9 +504,7 @@ function descending(td) {
   element(totalpages, page1)
   document.getElementById("no").value=page1
   xmlrequest();
-  let nod = document.getElementById("nod")
-  console.log(nod)
-  nod.classList.add("opacity1")
+  
     request.open(
       "GET",
       "http://127.0.0.1:8000/user/?page_num=" +
@@ -643,9 +537,13 @@ function descending(td) {
 
 function ascending(td) {
   document.getElementById("sort").value = ""
-
-  // this.parentNode.childNodes[1]
-  let thvalue = td.parentElement.parentElement.childNodes[0].innerHTML;
+  const boxes = document.querySelectorAll('.fa');
+  boxes.forEach(fa => { 
+   fa.classList.remove('opacity1');
+  });
+  let ur = td
+  ur.classList.add("opacity1")
+  let thvalue = td.parentElement.parentElement.firstElementChild.innerHTML;
   var key = document.getElementById("keyname")
   key.value = thvalue
   var page = 1;
@@ -659,3 +557,82 @@ function ascending(td) {
   request.send();
 }
 
+
+function myFunction() {
+  var x = document.getElementById("mySelect").selectedIndex;
+  var y = document.getElementById("mySelect").options;
+  var z = y[x].text
+  document.getElementById("pagesize2").value = z
+  console.log(z)
+  let totalpages=document.getElementById("total").value
+  xmlrequest();
+  let page1= 1;
+  
+  console.log(totalpages)
+  // let totalpages=total1
+  element(totalpages, page1)
+    request.open(
+      "GET",
+      "http://127.0.0.1:8000/user/?page_num=" +
+        page1 +
+        "&page_size=" +
+        z,
+      true
+    );
+    request.send();
+}
+
+
+// se.style.display="block"
+
+
+
+// "<tr>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>No</h6>"+
+// "<div>"+
+// "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
+// "<i class='fa fa-angle-down' id='no' onclick='descending(this);'></i>"+
+// "</div>"+
+// "</div>"+
+// "</th>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>Username</h6>"+
+// "<div>"+
+// "<i class='fa fa-angle-up opacity1' id='user' onclick='ascending(this)'></i>"+
+// "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
+// "</div>"+
+// "</div>"+
+// "</th>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>Email</h6>"+
+// "</div>"+
+// "</th>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>Address</h6>"+
+// "</div>"+
+// "</th>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>Age</h6>"+
+// "<div>"+
+// "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
+// "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
+// "</div>"+
+// "</div>"+
+// "</th>"+
+// "<th>"+
+// "<div class='d-flex'>"+
+// "<h6 class='heading'>College Name</h6>"+
+// "<div>"+
+// "<i class='fa fa-angle-up' onclick='ascending(this)'></i>"+
+// "<i class='fa fa-angle-down' onclick='descending(this)'></i>"+
+// "</div>"+
+// "</div>"+
+// "</th>"+
+// "<th>Action</th>"+
+// "</tr>";

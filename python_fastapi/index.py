@@ -1,5 +1,7 @@
 from email.errors import HeaderDefect
-from fastapi import Depends, FastAPI, HTTPException, Header, Request, status
+from django.db import router
+from fastapi.responses import RedirectResponse
+from fastapi import APIRouter, Depends, FastAPI, HTTPException, Header, Request, status
 from fastapi.security import HTTPBearer
 from typing import MutableMapping, Optional, List, Union, Any
 from httplib2 import Credentials
@@ -74,9 +76,10 @@ def create_access_token(data: dict, expire_delta: timedelta | None = None):
 #    payload["sub"]  = str(sub)
 
 #    returnjwt = jwt.encode(payload, _JWT_SECRET, algorithm=Algorithm)
-#    return returnjwt
+#    return returnjw
 
 app = FastAPI()
+prefix_router = APIRouter(prefix="/my_server")
 
 app.add_middleware(
     CORSMiddleware,
@@ -277,8 +280,8 @@ async def delete_student(id: int, token: str | None = Header(None), db: session 
 
 
 @app.get("/user/")
-def all_student(page_num: Optional[int] = 1, search: Optional[str] = "", whichsort: Optional[str] = "", key1: Optional[str] = "Username", db: session = Depends(get_databse_session)):
-    page_size = 3
+def all_student(page_num: Optional[int] = 1,page_size:Optional[int]=5 ,search: Optional[str] = "", whichsort: Optional[str] = "", key1: Optional[str] = "Username", db: session = Depends(get_databse_session)):
+    
     start = (page_num - 1) * page_size
     end = start + page_size
     if search != "":
@@ -322,7 +325,7 @@ def all_student(page_num: Optional[int] = 1, search: Optional[str] = "", whichso
                 if key1 == "Age":
                     sortdata = sorted(
                         data, key=lambda v: (v.age), reverse=True)
-                if key1 == "College_name":
+                if key1 == "College Name":
                     sortdata = sorted(data, key=lambda v: (
                         v.college_name), reverse=True)
 
@@ -347,3 +350,17 @@ def all_student(page_num: Optional[int] = 1, search: Optional[str] = "", whichso
                 "page_size": page_size,
         }
         return response
+
+@prefix_router.get("/my_path")
+async def docs_redirect(request:Request):
+    return {"message":"mypath"}
+
+app.include_router(prefix_router)
+# @sub_router.get("/")
+# def read_item():
+#     return {"id": "foo"}
+
+
+# router.include_router(sub_router, prefix="/items")
+
+# app.include_router(router)
