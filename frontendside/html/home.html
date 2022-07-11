@@ -58,17 +58,18 @@
       <input type="hidden" name="" id="keyname" value="Username"></div>
       <div  class="container ">
         Show
-        <select id="mySelect" onclick="myFunction()">
-          <option>5</option>
-          <option>10</option>
-          <option>20</option>
-          <option>30</option>
-          <option>40</option>
+        <select id="mySelect" onchange="selectedo(this.value)">
+          <option 30 value="5" selected="selected" >5</option>
+          <option value="10" >10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="70">70</option>
         </select>
         entries
       </div>
-      <input type="text" name="" id="pagesize2"></div>
-      <input type="text" name="" id="total"></div>
+      <input type="hidden" name="" id="pagesize2"></div>
+      <input type="hidden" name="" id="total"></div>
     </div>  
     
     <div>
@@ -188,10 +189,13 @@
       
       </ul>
     </div>
-    <div  class="container d-flex mr-3 justify-content-end">
-      <div id="no" class="me-2">1</div>
-      <div id="of" class="me-1">of</div>
-      <div id="totalpage" class="me-1"></div>
+    <div  class="container justify-content-end" id="nside">
+      <div class="d-flex mr-3 justify-content-end">
+        <div id="no" class="me-2">1</div>
+        <div id="of" class="me-1">of</div>
+        <div id="totalpage" class="me-1"></div>
+      </div>
+    
     </div>
     <input type="hidden" name="" id="searchtotal">
     <input type="hidden" id="length">

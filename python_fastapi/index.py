@@ -79,7 +79,7 @@ def create_access_token(data: dict, expire_delta: timedelta | None = None):
 #    return returnjw
 
 app = FastAPI()
-prefix_router = APIRouter(prefix="/my_server")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -351,11 +351,6 @@ def all_student(page_num: Optional[int] = 1,page_size:Optional[int]=5 ,search: O
         }
         return response
 
-@prefix_router.get("/my_path")
-async def docs_redirect(request:Request):
-    return {"message":"mypath"}
-
-app.include_router(prefix_router)
 # @sub_router.get("/")
 # def read_item():
 #     return {"id": "foo"}
