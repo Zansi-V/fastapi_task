@@ -15,7 +15,7 @@ function register(){
             redirect()
         }
     }
-    registeruser.open("POST","http://127.0.0.1:8000/sign_up",true)
+    registeruser.open("POST","http://192.168.1.11:8000/sign_up",true)
     let body = JSON.stringify({username:username1,email:email1,password:password1,address:address1,age:age1,college_name:college1})
     registeruser.setRequestHeader('Content-type','application/json;charset=UTF-8')
     registeruser.send(body)

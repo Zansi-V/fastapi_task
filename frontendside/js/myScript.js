@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
 document.getElementById('login_datav').onclick = function(){
     var username = document.getElementById('username12').value;
     var password = document.getElementById('password1').value;
-    var url= "http://127.0.0.1:8000/login"
+    var url= "http://192.168.1.11:8000/login"
     var request = new XMLHttpRequest
     request.open("POST",url,true)
     request.setRequestHeader('Content-type','application/json;charset=UTF-8')

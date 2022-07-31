@@ -1,13 +1,7 @@
-from email.errors import HeaderDefect
-from django.db import router
-from fastapi.responses import RedirectResponse
+from datetime import date, datetime, timedelta
+from typing import Union,Optional
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Header, Request, status
 from fastapi.security import HTTPBearer
-from typing import MutableMapping, Optional, List, Union, Any
-from httplib2 import Credentials
-from numpy import s_
-from pydantic import BaseModel, NoneBytes
-from datetime import datetime, timedelta
 from requests import Session, session
 from sqlalchemy import null
 from python_fastapi.databse import engine, sessionlocal
@@ -15,17 +9,19 @@ from python_fastapi.models import Base, User
 from passlib.context import CryptContext
 from email_validator import validate_email, EmailNotValidError
 from jose import jwt, JWTError
+from python_fastapi.elaticsearch import es
+from python_fastapi.empdetail import  empdetail
 from fastapi.templating import Jinja2Templates
 import math
-from python_fastapi.schemas import UserCreate, UserUpdate, userid, userpass, _UserBase, TokenData
+from python_fastapi.schemas import UserCreate, UserUpdate, userpass, _UserBase, TokenData,employeeinfo
 from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi_pagination import Page, LimitOffsetPage, paginate, add_pagination
 templates = Jinja2Templates(directory="htmldirectory")
 
 Base.metadata.create_all(bind=engine)
-JWTPayloadMapping = MutableMapping[str, Union[datetime, bool, str, List[str], List[int]]
-                                   ]
+# JWTPayloadMapping = MutableMapping[str, Union[datetime, bool, str, List[str], List[int]]
+                                #    ]
 _JWT_SECRET = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 Algorithm = "HS256"
@@ -351,11 +347,40 @@ def all_student(page_num: Optional[int] = 1,page_size:Optional[int]=5 ,search: O
         }
         return response
 
-# @sub_router.get("/")
-# def read_item():
-#     return {"id": "foo"}
+@app.get("/get_specific_employee")
+def employee(id:str,empdetail:empdetail=Depends(empdetail)):
+       return empdetail.get_data(id)
 
+@app.get("/get_all_employee_detail")
+def employee_all(empdetail:empdetail=Depends(empdetail)):
+       return empdetail.all()
 
-# router.include_router(sub_router, prefix="/items")
+@app.post("/insert_employee")
+def insert_employee(employee:employeeinfo,empdetail:empdetail=Depends(empdetail)):
+       return empdetail.insert_data(employee)
 
-# app.include_router(router)
+@app.put("/update_employee")
+def update_employee(employee_id:str,employee:employeeinfo,empdetail:empdetail=Depends(empdetail)):
+       return empdetail.update_employee(employee_id,employee)
+
+@app.delete("/delete_emp")
+def delete_employee(id:str,empdetail:empdetail=Depends(empdetail)):
+       empdetail.delete_data(id)
+       return "succesfully deleted"
+
+@app.get("/searchexpirence")
+def highest_expirence(expierence:int,empdetail:empdetail=Depends(empdetail)):
+    return empdetail.biggerexpirence(expierence)
+
+@app.get("/start_date")
+def start_date(gt_date:date,le_date:date,empdetail:empdetail=Depends(empdetail)):
+    return empdetail.starting_date(gt_date,le_date)
+    
+
+@app.get("/pagination")
+def pagination(page_no:int,empdetail:empdetail=Depends(empdetail)):
+    return empdetail.pagination(page_no)
+
+@app.get("/city_wise_emplyee")
+def city_wise_date(gt_date:date,le_date:date,empdetail:empdetail=Depends(empdetail)):
+    return empdetail.city_wise_employee(gt_date,le_date)

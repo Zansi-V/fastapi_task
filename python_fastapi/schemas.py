@@ -1,3 +1,5 @@
+from datetime import date
+from numpy import nested_iters
 from pydantic import BaseModel
 
 class _UserBase(BaseModel):
@@ -42,3 +44,17 @@ class TokenData(BaseModel):
 
     class config:
         orm_mode = True
+
+
+class employeeinfo(BaseModel):
+    name: str
+    age : int
+    salary :int
+    company_name :str
+    city : str
+    expirence:int
+    work_start:date
+    start_date:date
+
+
+

@@ -1,6 +1,7 @@
 function redirect() {
   window.location = "login.html";
 }
+var url1 ="http://192.168.1.11"
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("logout").onclick = function () {
     localStorage.removeItem("users");
@@ -28,7 +29,7 @@ function onload_event() {
       
     }
   };
-  xhr.open("GET", "http://127.0.0.1:8000/authorize/", true);
+  xhr.open("GET", "http://192.168.1.11:8000/authorize/", true);
   xhr.setRequestHeader("token", x);
   xhr.send();
 }
@@ -41,7 +42,7 @@ window.onload = load;
 // }
 
 // function load(){
-//     var url= "http://127.0.0.1:8000/searchuser"
+//     var url= "http://192.168.1.11:8000/searchuser"
 //     studentdata()
 //     request.open("GET",url,true)
 //     request.send()
@@ -49,7 +50,7 @@ window.onload = load;
 
 function load() {
   if(document.getElementById("sear").value == ""){
-   var url = "http://127.0.0.1:8000/user/";
+   var url = "http://192.168.1.11:8000/user/";
    request = new XMLHttpRequest();
    request.onreadystatechange = () => {
     if (request.readyState == 4 && request.status == 200) {
@@ -275,7 +276,7 @@ function searchvs() {
 
   request.open(
     "GET",
-    "http://127.0.0.1:8000/user/?page_num="+page+"&search=" + search1.value,
+    "http://192.168.1.11:8000/user/?page_num="+page+"&search=" + search1.value,
     true
   );
   request.send();
@@ -387,7 +388,7 @@ function run(td) {
       document.querySelector("#myModal #college").value = obj.college_name;
     }
   };
-  request.open("GET", "http://127.0.0.1:8000/user/" + er, true);
+  request.open("GET", "http://192.168.1.11:8000/user/" + er, true);
   request.send();
 }
 function deleter(td) {
@@ -407,7 +408,7 @@ function deleteuser() {
         alert(deleteuser.response);
       }
     };
-    deleteuser.open("DELETE", "http://127.0.0.1:8000/user/" + student_id, true);
+    deleteuser.open("DELETE", "http://192.168.1.11:8000/user/" + student_id, true);
     deleteuser.setRequestHeader("token", token);
     deleteuser.send();
     location.reload();
@@ -432,7 +433,7 @@ function supdate() {
         alert(updateuser1.responseText);
       }
     };
-    updateuser1.open("PUT", "http://127.0.0.1:8000/user/" + s_id, true);
+    updateuser1.open("PUT", "http://192.168.1.11:8000/user/" + s_id, true);
     updateuser1.setRequestHeader(
       "Content-type",
       "application/json;charset=UTF-8"
@@ -497,10 +498,10 @@ function r1(td) {
   no.innerHTML = td;
   xmlrequest();
   if(document.getElementById("sear").value==""){
-  request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er, true);
+  request.open("GET", "http://192.168.1.11:8000/user/?page_num=" + er, true);
   }
   else{
-  request.open("GET", "http://127.0.0.1:8000/user/?page_num=" + er +"&search="+search1.value, true);
+  request.open("GET", "http://192.168.1.11:8000/user/?page_num=" + er +"&search="+search1.value, true);
   }
   request.send();
 }
@@ -579,7 +580,7 @@ function descending(td) {
   xmlrequest();
   request.open(
     "GET",
-    "http://127.0.0.1:8000/user/?page_num=" +
+    "http://192.168.1.11:8000/user/?page_num=" +
       page +
       "&whichsort=" +
       descorder +
@@ -597,7 +598,7 @@ function ascending(td) {
   xmlrequest();
   request.open(
     "GET",
-    "http://127.0.0.1:8000/user/?page_num=" + page + "&key1=" + thvalue,
+    "http://192.168.1.11:8000/user/?page_num=" + page + "&key1=" + thvalue,
     true
   );
   request.send();
