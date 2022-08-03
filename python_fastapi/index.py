@@ -2,8 +2,9 @@ from datetime import date, datetime, timedelta
 from typing import Union,Optional
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Header, Request, status
 from fastapi.security import HTTPBearer
+from pydantic import BaseModel
 from requests import Session, session
-from sqlalchemy import null
+from sqlalchemy import null, true
 from python_fastapi.databse import engine, sessionlocal
 from python_fastapi.models import Base, User
 from passlib.context import CryptContext
@@ -384,3 +385,20 @@ def pagination(page_no:int,empdetail:empdetail=Depends(empdetail)):
 @app.get("/city_wise_emplyee")
 def city_wise_date(gt_date:date,le_date:date,empdetail:empdetail=Depends(empdetail)):
     return empdetail.city_wise_employee(gt_date,le_date)
+
+@app.get("/get_record")
+def get_recordby_name(empname:str,empdetail:empdetail=Depends(empdetail)):
+    get_employee = empdetail.get_records_by_name(empname)
+    return {"data":get_employee,"success":"true"}
+
+class Item(BaseModel):
+    name: str
+    description: Union[str, None] = None
+    price: float
+    tax: Union[float, None] = None
+
+
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, item: Item):
+    results = {"item_id": item_id, "item": item}
+    return results

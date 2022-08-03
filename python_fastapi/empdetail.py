@@ -1,4 +1,6 @@
 from datetime import date
+
+from pydantic import BaseModel
 from python_fastapi.elaticsearch import es
 from python_fastapi.schemas import employeeinfo
 from elasticsearch.helpers import scan
@@ -6,7 +8,10 @@ from elasticsearch.helpers import scan
 # def update(id:employeeinfo):
 #    update = es.update(index="employee", id=id, doc={'name': 'radha'},)
 #    return update
-
+class empdeatil(BaseModel):
+    name1:str
+    age:int
+    salary:str
 
 class empdetail:
     def get_data(self, employeeid: str):
@@ -112,7 +117,8 @@ class empdetail:
     def pagination(self, page_no: int):
         pagination = {
             "query": {
-                "match_all": {}
+                "match_all": {
+                }
             },
             "size": 5,
             "from": page_no
@@ -157,3 +163,24 @@ class empdetail:
             }
         }
         return es.search(index="employee_deatils",body=city_wise_date)
+
+    def get_records_by_name(self,name:str):
+        get_record = { 
+            "query":{
+                "match":{
+                    "name":name
+                }
+            },
+            "_source":[
+                "name","age","salary"
+            ]
+            
+        }
+        # return Search.from_dict().using(es).index("employee_deatils").execute()
+        record_query = es.search(index="employee_deatils", body=get_record)
+        for doc in record_query["hits"]["hits"]:
+            hi = doc["_source"]
+            user = empdetail(**hi)
+            print(user.name1)
+        
+            return doc["_source"]
