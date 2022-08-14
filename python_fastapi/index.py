@@ -32,8 +32,8 @@ security = HTTPBearer()
 #      "http://localhost",
 #      "http://localhost:8000",
 #      "http://localhost:8080",
+#      "http://localhost:3000"
 # ]
-
 
 def get_databse_session():
     try:
@@ -80,7 +80,6 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-
     allow_credentials=True,
     allow_origins=["*"],
     allow_methods=["*"],
